@@ -23,9 +23,11 @@ def search():
         names = []
         name = request.form.get("query")
         result = search_for_song(token, name)
-        for i in range(len(result)):
-            names.append(result[i]["name"])
-        return RenderTemplate("index.html", names = names)
+        if result != None:
+            for i in range(len(result)):
+                names.append(result[i]["name"])
+            return RenderTemplate("index.html", names = names)
+        return RenderTemplate("index.html", names = ["Error: No songs found"])
     return RenderTemplate("index.html")
 
 def search_for_song(token, song_name):
