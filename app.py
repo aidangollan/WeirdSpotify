@@ -2,7 +2,7 @@ from flask import Flask, render_template as RenderTemplate, request
 from dotenv import load_dotenv
 import os
 import base64
-from requests import post
+from requests import post, get
 import json
 
 
@@ -14,9 +14,36 @@ app = Flask(__name__)
 
 @app.route("/")
 def main():
-    token = get_token()
-    
     return RenderTemplate("index.html")
+
+@app.route("/search", methods=["GET","POST"])
+def search():
+    if request.method == "POST":
+        token = get_token()
+        names = []
+        name = request.form.get("query")
+        result = search_for_song(token, name)
+        for i in range(len(result)):
+            names.append(result[i]["name"])
+        return RenderTemplate("index.html", names = names)
+    return RenderTemplate("index.html")
+
+def search_for_song(token, song_name):
+    url = "https://api.spotify.com/v1/search"
+    headers = get_auth_header(token)
+    query = f"?q={song_name}&type=track&limit=10"
+
+    query_url = url + query
+
+    result = get(query_url, headers = headers)
+    json_result = json.loads(result.content)["tracks"]["items"]
+    if len(json_result) == 0:
+        print("no songs by that name")
+        return None
+    return json_result
+
+def get_auth_header(token):
+    return {"Authorization": "Bearer " + token}
 
 def get_token():
     auth_string = client_id + ":" + client_secret
@@ -36,4 +63,4 @@ def get_token():
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)

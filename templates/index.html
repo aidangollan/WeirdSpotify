@@ -1,6 +1,22 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Home</title>
-    </head>
+<head>
+    <title>Search Names</title>
+</head>
+<body>
+    <!-- Search Form -->
+    <form action="/search" method="post">
+        <label for="query">Search:</label>
+        <input type="text" id="query" name="query" required>
+        <input type="submit" value="Search">
+    </form>
+    <!-- Results List -->
+    <ul>
+        {% if names %}
+            {% for name in names %}
+                <li>{{ name }}</li>
+            {% endfor %}
+        {% endif %}
+    </ul>
+</body>
 </html>
