@@ -11,6 +11,7 @@ client_id = os.getenv("CLIENT_ID")
 client_secret = os.getenv("CLIENT_SECRET")
 
 app = Flask(__name__)
+depth = "10"
 
 @app.route("/")
 def main():
@@ -21,19 +22,33 @@ def search():
     if request.method == "POST":
         token = get_token()
         names = []
-        name = request.form.get("query")
-        result = search_for_song(token, name)
-        if result != None:
-            for i in range(len(result)):
-                names.append(result[i]["name"])
-            return RenderTemplate("index.html", names = names)
+        query = request.form.get("query")
+        result = search_algo(token, query)
+        print(f"result is {result}")
+        if result:
+            return RenderTemplate("index.html", names = result)
         return RenderTemplate("index.html", names = ["Error: No songs found"])
     return RenderTemplate("index.html")
+
+def search_algo(token, query):
+    print(f"query is {query}")
+    query = query.split(" ")
+    out = []
+    for word in query:
+        result = search_for_song(token, word)
+        print(f"THE RESULT OF THE SEARCH FOR {word} IS {result[1]}")
+        for i in range(int(depth)):
+            print(f"entry {i} of word {word} is {result[i]['name']}")
+            if word.lower() == result[i]["name"].lower():
+                print("found word")
+                out.append(f"song: {result[i]['name']} by: {result[i]['artists'][0]['name']}")
+                break
+    return out
 
 def search_for_song(token, song_name):
     url = "https://api.spotify.com/v1/search"
     headers = get_auth_header(token)
-    query = f"?q={song_name}&type=track&limit=10"
+    query = f"?q={song_name}&type=track&limit={depth}"
 
     query_url = url + query
 
