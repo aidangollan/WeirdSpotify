@@ -13,19 +13,20 @@ def search():
     if request.method == "POST":
         token = get_token()
         names = []
+        '''
         for word in open("google-10000-english.txt", "r"):
             word = word.strip()
             print(type(word))
             print(f"|{word}|")
             print(search_algo(token, word))
-        query = request.form.get("query")
         '''
+        query = request.form.get("query")
         result = search_algo(token, query)
         print(f"result is {result}")
         if result:
             return RenderTemplate("index.html", names = result)
         return RenderTemplate("index.html", names = ["Error: No songs found"])
-        '''
+        
     return RenderTemplate("index.html")
 
 
