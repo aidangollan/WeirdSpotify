@@ -4,9 +4,12 @@ from auth import get_token
 from models import Song
 from db import db
 import json
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://doadmin:AVNS_orzSBwFvnylVvuSJsYS@spotifydb-do-user-14511927-0.b.db.ondigitalocean.com:25060/defaultdb?sslmode=require'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
 db.init_app(app)
 
 @app.route("/")
