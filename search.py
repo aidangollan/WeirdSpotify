@@ -1,5 +1,5 @@
-from auth import get_auth_header, get_token
-from requests import post, get
+from auth import get_auth_header
+from requests import get
 import json
 depth = "50"
 
@@ -45,16 +45,8 @@ def search_algo(token, query):
         return ["Error: Not all words were matched"]
     
     return out
-    out = []
-    result = search_for_song(token, query)
-    if result is not None:
-        for r in result:
-            out.append(r['name'])
-        return out
-    else:
-        return ["No Song"]
     
-def search_for_song(token, song_name, max_pages=1000):
+def search_for_song(token, song_name, max_pages=100):
     try:
         url = "https://api.spotify.com/v1/search"
         headers = get_auth_header(token)

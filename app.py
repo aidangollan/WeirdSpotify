@@ -1,8 +1,13 @@
 from flask import Flask, render_template as RenderTemplate, request
-from oldCode import search_algo, search_for_song
-from auth import get_token, get_auth_header
+from search import search_algo, search_for_song
+from auth import get_token
+from models import Song
+from db import db
+import json
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://doadmin:AVNS_orzSBwFvnylVvuSJsYS@spotifydb-do-user-14511927-0.b.db.ondigitalocean.com:25060/defaultdb?sslmode=require'
+db.init_app(app)
 
 @app.route("/")
 def main():
@@ -12,14 +17,6 @@ def main():
 def search():
     if request.method == "POST":
         token = get_token()
-        names = []
-        '''
-        for word in open("google-10000-english.txt", "r"):
-            word = word.strip()
-            print(type(word))
-            print(f"|{word}|")
-            print(search_algo(token, word))
-        '''
         query = request.form.get("query")
         result = search_algo(token, query)
         print(f"result is {result}")
@@ -29,6 +26,23 @@ def search():
         
     return RenderTemplate("index.html")
 
+@app.route("/add_to_db", methods=["GET", "POST"])
+def add_to_db():
+    if request.method == "POST":
+        token = get_token()
+        for word in open("google-10000-english.txt", "r"):
+            word = word.strip()
+            result = search_for_song(token, word)
+            
+            if result:
+                # Add the song to the database
+                print(f"adding word: {word}")
+                song = Song(name=word, song_data=json.dumps(result))
+                db.session.add(song)
+                db.session.commit()
+
 
 if __name__ == "__main__":
+    with app.app_context():
+        db.create_all()
     app.run(debug=True)
