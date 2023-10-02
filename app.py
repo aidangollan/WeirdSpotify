@@ -22,7 +22,6 @@ def search():
         token = get_token()
         query = request.form.get("query")
         result = search_algo(token, query)
-        print(f"result is {result}")
         if result:
             return RenderTemplate("index.html", names = result)
         return RenderTemplate("index.html", names = ["Error: No songs found"])
@@ -39,7 +38,6 @@ def add_to_db():
             
             if result:
                 # Add the song to the database
-                print(f"adding word: {word}")
                 song = Song(name=word, song_data=json.dumps(result))
                 db.session.add(song)
                 db.session.commit()
