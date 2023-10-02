@@ -4,3 +4,4 @@ gunicorn==21.2.0
 Sqlalchemy==2.0.21
 requests==2.26.0
 Flask-SQLAlchemy==3.1.1
+psycopg2==2.9.8
