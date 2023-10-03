@@ -5,9 +5,9 @@ from models import Song
 from db import db
 import json
 import os
-#from dotenv import load_dotenv
+from dotenv import load_dotenv
 
-#load_dotenv()
+load_dotenv()
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
 db.init_app(app)

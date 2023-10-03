@@ -5,19 +5,21 @@
     <link rel="stylesheet" type="text/css" href="static/styles.css">
 </head>
 <body>
-    <!-- Search Form -->
-    <form action="/search" method="post">
-        <label for="query">Search:</label>
-        <input type="text" id="query" name="query" required>
-        <input type="submit" value="Search">
-    </form>
-    <!-- Results List -->
-    <ul>
-        {% if names %}
-            {% for name in names %}
-                <li>{{ name }}</li>
-            {% endfor %}
-        {% endif %}
-    </ul>
+    <div class="container">
+        <!-- Search Form -->
+        <form action="/search" method="post">
+            <label for="query">Search:</label>
+            <input type="text" id="query" name="query" required>
+            <input type="submit" value="Search">
+        </form>
+        <!-- Results List -->
+        <ul>
+            {% if names %}
+                {% for name in names %}
+                    <li>{{ name }}</li>
+                {% endfor %}
+            {% endif %}
+        </ul>
+    </div>
 </body>
 </html>
