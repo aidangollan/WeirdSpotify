@@ -79,6 +79,6 @@ li {
 
     input[type="submit"] {
         font-size: 2rem;   /* Bigger text for the button */
-        padding: 1.5rem 2rem;  /* More padding for a taller button */
+        padding: 3rem 2rem;  /* Significantly more vertical padding for a much taller button */
     }
 }
