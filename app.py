@@ -1,20 +1,20 @@
-from flask import Flask, render_template as RenderTemplate, request
+from flask import Flask, render_template, request, jsonify
 from search import search_algo, search_for_song
 from auth import get_token
 from models import Song
 from db import db
 import json
 import os
-#from dotenv import load_dotenv
+from dotenv import load_dotenv
 
-#load_dotenv()
+load_dotenv()
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
 db.init_app(app)
 
 @app.route("/")
 def main():
-    return RenderTemplate("index.html")
+    return render_template("index.html")
 
 @app.route("/search", methods=["GET","POST"])
 def search():
@@ -22,11 +22,18 @@ def search():
         token = get_token()
         query = request.form.get("query")
         result = search_algo(token, query)
-        if result:
-            return RenderTemplate("index.html", names = result)
-        return RenderTemplate("index.html", names = ["Error: No songs found"])
         
-    return RenderTemplate("index.html")
+        # Check if the request is an AJAX request
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            if result:
+                return jsonify(names=result)
+            return jsonify(names=["Error: No songs found"])
+        
+        if result:
+            return render_template("index.html", names=result)
+        return render_template("index.html", names=["Error: No songs found"])
+        
+    return render_template("index.html")
 
 @app.route("/add_to_db", methods=["GET", "POST"])
 def add_to_db():
