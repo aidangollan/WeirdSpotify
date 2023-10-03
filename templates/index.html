@@ -4,6 +4,7 @@
     <title>Search Names</title>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="static/styles.css">
+    <script src="static/scripts.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
@@ -18,7 +19,7 @@
             <input type="submit" value="Search">
         </form>
         <!-- Results List -->
-        <ul>
+        <ul id="resultsList">
             {% if names %}
                 {% for name in names %}
                     <li>{{ name }}</li>
