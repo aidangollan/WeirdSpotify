@@ -20,7 +20,7 @@ def main():
 def search():
     if request.method == "POST":
         token = get_token()
-        query = request.form.get("query")
+        query = request.form.get("query").strip(" ")
         result = search_algo(token, query)
         
         # Check if the request is an AJAX request
