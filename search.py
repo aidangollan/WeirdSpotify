@@ -19,6 +19,7 @@ def search_algo(token, query):
     words = query.split(" ")
     out = []
     matched_indices = set()  # To keep track of matched word indices
+    unmatched_words = set(words)  # New set to store unmatched words
 
     for window_size in range(1, len(words) + 1):
         for i in range(len(words) - window_size + 1):
@@ -33,6 +34,7 @@ def search_algo(token, query):
             if db_result:
                 out.append(db_result)
                 matched_indices.update(range(i, i + window_size))
+                unmatched_words.difference_update(words[i:i + window_size])
                 continue 
 
             # If not found in the database, then check Spotify
@@ -43,13 +45,13 @@ def search_algo(token, query):
                     if substring.lower() == song_name:
                         out.append(f"song: {entry['name']} by: {entry['artists'][0]['name']}")
                         matched_indices.update(range(i, i + window_size))
+                        unmatched_words.difference_update(words[i:i + window_size])
                         break
 
-    # Check if all words have been matched
-    if len(matched_indices) != len(words):
-        return ["Error: Not all words were matched"]
+    # Check if there are unmatched words and provide error messages for each one
+    error_messages = [f"Error: word '{word}' was not found" for word in unmatched_words]
 
-    return out
+    return out + error_messages
 
 def search_in_database(song_name):
     """Search the song in the database"""
