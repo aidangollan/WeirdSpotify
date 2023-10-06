@@ -5,10 +5,10 @@ from models import Song
 from db import db
 import json
 import os
-from dotenv import load_dotenv
+#from dotenv import load_dotenv
 from flask_cors import CORS
 
-load_dotenv()
+#load_dotenv()
 app = Flask(__name__, static_folder='client/build', static_url_path='')
 CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")

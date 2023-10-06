@@ -6,9 +6,9 @@ from models import Song
 from sqlalchemy import create_engine, Column, Integer, String, MetaData
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from dotenv import load_dotenv
+#from dotenv import load_dotenv
 
-load_dotenv()
+#load_dotenv()
 depth = "50"
 DATABASE_URI = os.getenv("DATABASE_URL")
 engine = create_engine(DATABASE_URI)
