@@ -17,6 +17,11 @@ async function handleFormSubmit(query) {
                 console.error(data.error);
                 return { error: data.error };
             } else {
+                // Scroll to results
+                const resultsDiv = document.getElementById('resultsList');
+                const position = resultsDiv.offsetTop - (window.innerHeight / 2) + (resultsDiv.offsetHeight / 2);
+                window.scrollTo({ top: position, behavior: 'smooth' });
+            
                 return { names: data.names };
             }
         } else {
