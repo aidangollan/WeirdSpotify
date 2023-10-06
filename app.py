@@ -20,6 +20,7 @@ def search():
     query = request.json.get("query").strip(" ")
     print(query)
     result = search_algo(token, query)
+    print(result)
     
     if result:
         return jsonify(names=result)

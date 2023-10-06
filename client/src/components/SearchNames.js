@@ -15,17 +15,15 @@ function SearchNames() {
         const result = await handleFormSubmit(query);
         if (result.error) {
             console.error(result.error);
-            // Maybe set some state here to notify the user of the error
         } else {
             if (Array.isArray(result.names)) {
                 setNames(result.names);
             } else {
                 console.error("Received unexpected data format from server");
-                // Handle this case, e.g., set an error state or message
             }
         }
+        setQuery('');
     };
-
     return (
         <div>
             <NavBar />

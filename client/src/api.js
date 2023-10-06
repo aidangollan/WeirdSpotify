@@ -2,7 +2,7 @@ async function handleFormSubmit(query) {
     const apiUrl = `${window.location.origin}/api/search`;
     const localUrl = 'http://localhost:5000/api/search';
     try {
-        const response = await fetch(apiUrl, {
+        const response = await fetch(localUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
