@@ -1,7 +1,6 @@
 import React from 'react';
 
 function ResultsList({ names }) {
-    console.log("Inside ResultsList", names);
 
     return (
         <ul id="resultsList">
