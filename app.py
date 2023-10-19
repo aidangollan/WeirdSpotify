@@ -93,6 +93,8 @@ def create_playlist():
         print(user_token)
         return jsonify(error="User not logged in"), 401
     
+    print(user_token)
+    
     song_ids = request.json.get("song_ids")
     # You'll need to implement the function below to create a playlist using the Spotify API
     success = create_playlist_on_spotify(user_token, song_ids)
@@ -103,6 +105,7 @@ def create_playlist():
         return jsonify(success=False, message="Failed to create playlist"), 500
     
 def create_playlist_on_spotify(user_token, song_ids):
+    print("in create playlist on spotify")
     SPOTIFY_API_BASE_URL = "https://api.spotify.com/v1"
     HEADERS = {
         "Authorization": f"Bearer {user_token}"
@@ -112,6 +115,9 @@ def create_playlist_on_spotify(user_token, song_ids):
     current_user_request = requests.get(f"{SPOTIFY_API_BASE_URL}/me", headers=HEADERS)
     current_user_data = current_user_request.json()
     user_id = current_user_data['id']
+
+    print(user_id)
+    print("user id")
 
     # 2. Create a new playlist for the user
     create_playlist_data = {
@@ -123,12 +129,21 @@ def create_playlist_on_spotify(user_token, song_ids):
     new_playlist_data = create_playlist_request.json()
     playlist_id = new_playlist_data['id']
 
+    print(playlist_id)
+    print("playlist id")
+
     # 3. Add tracks to the new playlist
     add_tracks_data = {
         "uris": [f"spotify:track:{song_id}" for song_id in song_ids]
     }
     add_tracks_request = requests.post(f"{SPOTIFY_API_BASE_URL}/playlists/{playlist_id}/tracks", headers=HEADERS, json=add_tracks_data)
     add_tracks_response = add_tracks_request.json()
+
+    print(add_tracks_response)
+    print("add tracks response")
+
+    print(add_tracks_request.status_code)
+    print("add tracks request status code")
 
     if add_tracks_request.status_code == 201:  # 201 means tracks added successfully
         return True
