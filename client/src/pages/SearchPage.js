@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { handleFormSubmit } from '../api';
 import '../styles.css';
 
-import NavBar from './NavBar';
-import SearchForm from './SearchForm';
-import ResultsList from './ResultsList';
+import NavBar from '../components/NavBar';
+import SearchForm from '../components/SearchForm';
+import ResultsList from '../components/ResultsList';
+import LogoutButton from '../components/LogoutButton';
+import CreatePlaylistButton from '../components/CreatePlaylistButton';
 
-function SearchNames() {
+function SearchPage() {
     const [names, setNames] = useState([]);
     const [query, setQuery] = useState('');
 
@@ -15,19 +17,18 @@ function SearchNames() {
         const result = await handleFormSubmit(query);
         if (result.error) {
             console.error(result.error);
-            // Maybe set some state here to notify the user of the error
         } else {
             if (Array.isArray(result.names)) {
                 setNames(result.names);
             } else {
                 console.error("Received unexpected data format from server");
-                // Handle this case, e.g., set an error state or message
             }
         }
     };
 
     return (
         <div>
+            <LogoutButton />
             <NavBar />
             <div className="container">
                 <SearchForm 
@@ -36,9 +37,10 @@ function SearchNames() {
                     onSubmit={handleSubmit}
                 />
                 <ResultsList names={names} />
+                <CreatePlaylistButton songIds={names.map(song => song.id)} />
             </div>
         </div>
     );
 }
 
-export default SearchNames;
+export default SearchPage;
