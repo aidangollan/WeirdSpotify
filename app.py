@@ -134,11 +134,13 @@ def create_playlist_on_spotify(user_token, song_ids):
 @app.route('/', defaults={'subpath': ''})
 @app.route('/<path:subpath>')
 def serve(subpath):
-    print(f"Trying to serve: {subpath}")
-    if os.path.exists(os.path.join(app.static_folder, subpath)):
+    full_path = os.path.join(app.static_folder, subpath)
+    print(f"Full path: {full_path}")
+    if os.path.exists(full_path):
         return send_from_directory(app.static_folder, subpath)
     else:
         return send_from_directory(app.static_folder, 'index.html')
+
 
 
 
