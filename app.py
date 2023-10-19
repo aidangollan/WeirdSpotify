@@ -79,6 +79,10 @@ def search():
         return jsonify(names=result)
     return jsonify(error="No songs found"), 404
 
+@app.route("search")
+def search_default():
+    return send_from_directory(app.static_folder, 'index.html')
+
 @app.route("/api/create_playlist", methods=["POST"])
 def create_playlist():
     print("in create playlist")
