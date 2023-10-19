@@ -131,18 +131,15 @@ def create_playlist_on_spotify(user_token, song_ids):
     else:
         return False
 
-@app.route("/", defaults={"path": ""})
-@app.route("/<path:path>")
-def serve(path):
-    print(f"Trying to serve: {path}")
-    
-    full_path = os.path.join(app.static_folder, path)
-    print(f"Full path: {full_path}")
-
-    if path != "" and os.path.exists(full_path):
-        return send_from_directory(app.static_folder, path)
+@app.route('/', defaults={'subpath': ''})
+@app.route('/<path:subpath>')
+def serve(subpath):
+    print(f"Trying to serve: {subpath}")
+    if os.path.exists(os.path.join(app.static_folder, subpath)):
+        return send_from_directory(app.static_folder, subpath)
     else:
         return send_from_directory(app.static_folder, 'index.html')
+
 
 
 if __name__ == "__main__":
