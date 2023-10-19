@@ -1,7 +1,7 @@
 import React from 'react';
 
 function CreatePlaylistButton({ songIds }) {
-    const apiUrl = `${process.env.REACT_APP_API_URL}/api/create_playlist` || `${window.location.origin}/api/create_playlist`;
+    const apiUrl = `${window.location.origin}/api/create_playlist`;
 
     const handleCreatePlaylistClick = async () => {
         try {

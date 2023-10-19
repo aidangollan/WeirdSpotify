@@ -20,7 +20,7 @@ db.init_app(app)
 # Spotify integration
 CLIENT_ID = os.getenv("CLIENT_ID")
 CLIENT_SECRET = os.getenv("CLIENT_SECRET")
-REDIRECT_URI = 'http://127.0.0.1:5000/api/callback'  # Update if needed
+REDIRECT_URI = "https://sea-turtle-app-2-b6row.ondigitalocean.app/api/callback"
 AUTH_URL = 'https://accounts.spotify.com/authorize'
 TOKEN_URL = 'https://accounts.spotify.com/api/token'
 

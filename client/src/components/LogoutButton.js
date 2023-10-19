@@ -1,7 +1,7 @@
 import React from 'react';
 
 function LogoutButton() {
-    const apiUrl = `${process.env.REACT_APP_API_URL}/api/logout` || `${window.location.origin}/api/logout`;
+    const apiUrl = `${window.location.origin}/api/logout`;
 
     const handleLogoutClick = () => {
         window.location.href = apiUrl;

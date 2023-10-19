@@ -1,7 +1,7 @@
 import React from 'react';
 
 function LoginPage() {
-    const apiUrl = `${process.env.REACT_APP_API_URL}/api/login` || `${window.location.origin}/api/login`;
+    const apiUrl = `${window.location.origin}/api/login`;
 
     const handleLoginClick = () => {
         // Redirect to the /login route of your Flask app

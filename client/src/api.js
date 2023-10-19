@@ -1,5 +1,5 @@
 async function handleFormSubmit(query) {
-    const apiUrl = `${process.env.REACT_APP_API_URL}/api/search` || `${window.location.origin}/api/search`;
+    const apiUrl = `${window.location.origin}/api/search`;
     try {
         const response = await fetch(apiUrl, {
             method: 'POST',
