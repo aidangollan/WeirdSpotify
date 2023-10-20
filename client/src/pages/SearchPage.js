@@ -10,6 +10,7 @@ import CreatePlaylistButton from '../components/CreatePlaylistButton';
 
 function SearchPage() {
     const [songs, setSongs] = useState([]);
+    const [errors, setErrors] = useState([]);
     const [query, setQuery] = useState('');
 
     const handleSubmit = async (e) => {
@@ -18,10 +19,16 @@ function SearchPage() {
         if (result.error) {
             console.error(result.error);
         } else {
-            if (Array.isArray(result.names)) {
-                setSongs(result.names);
+            if (Array.isArray(result.songs)) {
+                setSongs(result.songs);
             } else {
-                console.error("Received unexpected data format from server");
+                console.error("Received unexpected songs data format from server");
+            }
+
+            if (Array.isArray(result.errors)) {
+                setErrors(result.errors);
+            } else {
+                console.error("Received unexpected errors data format from server");
             }
         }
     };
@@ -30,11 +37,9 @@ function SearchPage() {
         ...song,
         frontend_id: index
     }));
-    
-    // Use frontend_id for any frontend-specific operations, but use the regular id (Spotify ID) for backend operations.
+
     const songIds = modifiedSongs.map(song => song.id);
 
-    // Log songIds and song details
     console.log("songIds:", songIds);
     console.log("songs:", songs);
 
@@ -49,7 +54,7 @@ function SearchPage() {
                     onQueryChange={e => setQuery(e.target.value)}
                     onSubmit={handleSubmit}
                 />
-                <ResultsList songs={modifiedSongs} />
+                <ResultsList songs={modifiedSongs} errors={errors} />
             </div>
         </div>
     );

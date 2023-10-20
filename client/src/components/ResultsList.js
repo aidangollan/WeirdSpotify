@@ -1,20 +1,19 @@
 import React from 'react';
 
-function ResultsList({ songs }) {
+function ResultsList({ songs, errors }) {
     return (
         <div>
             <ul id="resultsList">
-                {songs.map((song) => {
-                    if (song.frontend_id) {
-                        return <li key={song.frontend_id}>{song.name}, By: {song.artist}</li>
-                    } else if (song.error) {
-                        return <li key={song.error} style={{ color: 'red' }}>{song.error}</li>
-                    }
-                    return null;
-                })}
+                {songs.map(song => (
+                    <li key={song.frontend_id}>{song.name}, By: {song.artist}</li>
+                ))}
+                {errors.map((error, index) => (
+                    <li key={index} style={{ color: 'red' }}>{error}</li>
+                ))}
             </ul>
         </div>
     );
 }
+
 
 export default ResultsList;
