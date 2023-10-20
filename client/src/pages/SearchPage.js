@@ -26,7 +26,13 @@ function SearchPage() {
         }
     };
 
-    const songIds = songs.map(song => song.id);
+    const modifiedSongs = songs.map((song, index) => ({
+        ...song,
+        frontend_id: index
+    }));
+    
+    // Use frontend_id for any frontend-specific operations, but use the regular id (Spotify ID) for backend operations.
+    const songIds = modifiedSongs.map(song => song.id);
 
     // Log songIds and song details
     console.log("songIds:", songIds);
@@ -43,7 +49,7 @@ function SearchPage() {
                     onSubmit={handleSubmit}
                 />
                 <ResultsList songs={songs} />
-                <CreatePlaylistButton songIds={songIds} />
+                <CreatePlaylistButton songIds={modifiedSongs} />
             </div>
         </div>
     );
