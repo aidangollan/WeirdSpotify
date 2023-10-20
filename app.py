@@ -20,20 +20,17 @@ db.init_app(app)
 # Spotify integration
 CLIENT_ID = os.getenv("CLIENT_ID")
 CLIENT_SECRET = os.getenv("CLIENT_SECRET")
-REDIRECT_URI = "https://sea-turtle-app-2-b6row.ondigitalocean.app/api/callback"
-AUTH_URL = 'https://accounts.spotify.com/authorize'
-TOKEN_URL = 'https://accounts.spotify.com/api/token'
 
 @app.route('/api/login')
 def login():
     auth_query_parameters = {
         "response_type": "code",
-        "redirect_uri": REDIRECT_URI,
+        "redirect_uri": os.getenv("REDIRECT_URI"),
         "scope": "playlist-modify-public",  # Only need permission to modify playlists
         "client_id": CLIENT_ID
     }
     url_args = "&".join(["{}={}".format(key, val) for key, val in auth_query_parameters.items()])
-    auth_url = "{}/?{}".format(AUTH_URL, url_args)
+    auth_url = "{}/?{}".format(os.getenv("AUTH_URL"), url_args)
     return redirect(auth_url)
 
 @app.route('/api/callback')
@@ -42,18 +39,18 @@ def callback():
     code_payload = {
         "grant_type": "authorization_code",
         "code": auth_token,
-        "redirect_uri": REDIRECT_URI,
+        "redirect_uri": os.getenv("REDIRECT_URI"),
         'client_id': CLIENT_ID,
         'client_secret': CLIENT_SECRET,
     }
-    post_request = requests.post(TOKEN_URL, data=code_payload)
+    post_request = requests.post(os.getenv("TOKEN_URL"), data=code_payload)
     response_data = post_request.json()
     print(response_data["access_token"])
     session['token'] = response_data["access_token"]
     print("session token")
     print(session['token'])
     
-    return redirect(os.getenv("REACT_APP_URL"))
+    return redirect(os.getenv("SEARCH_URL"))
 
 @app.route('/set_session')
 def set_session():
@@ -67,7 +64,7 @@ def get_session():
 @app.route('/api/logout')
 def logout():
     session.pop('token', None)
-    return redirect(os.getenv("REACT_APP_URL"))
+    return redirect(os.getenv("HOME_URL"))
 
 @app.route("/api/search", methods=["POST"])
 def search():
