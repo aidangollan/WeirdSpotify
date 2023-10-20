@@ -7,8 +7,8 @@ import requests
 import os
 from flask_cors import CORS
 
-from dotenv import load_dotenv
-load_dotenv()
+#from dotenv import load_dotenv
+#load_dotenv()
 
 
 app = Flask(__name__, static_folder='client/build', static_url_path='')
