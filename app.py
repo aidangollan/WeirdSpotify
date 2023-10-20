@@ -29,14 +29,18 @@ def login():
     if is_guest:
         # Handle the guest login logic here, for example:
         # Set the session['user_type'] = 'guest'
+        print("guest login")
         session['user_type'] = 'guest'
         user_token = refresh_access_token(os.getenv('GUEST_REFRESH_TOKEN'))
         session['token'] = user_token
+        print("Access Token:", session['token'])
+        print("'scope:', session['scope']")
         return redirect("/search")
 
     
     # If not a guest, proceed with Spotify login
     session['user_type'] = 'normal'
+    print("normal login")
 
     auth_query_parameters = {
         "response_type": "code",
