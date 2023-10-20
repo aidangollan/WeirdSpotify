@@ -50,7 +50,7 @@ def callback():
     print("session token")
     print(session['token'])
     
-    return redirect(os.getenv("SEARCH_URL"))
+    return redirect("/search")
 
 @app.route('/set_session')
 def set_session():
@@ -64,7 +64,7 @@ def get_session():
 @app.route('/api/logout')
 def logout():
     session.pop('token', None)
-    return redirect(os.getenv("HOME_URL"))
+    return redirect("/login")
 
 @app.route("/api/search", methods=["POST"])
 def search():
