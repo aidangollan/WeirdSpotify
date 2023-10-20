@@ -71,7 +71,9 @@ def search():
     print("in search")
     token = get_token() #my token, not user, used for searching for songs
     query = request.json.get("query").strip(" ")
+    print(query)
     result = search_algo(token, query)
+    print(result)
     
     return result
 

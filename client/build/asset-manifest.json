@@ -1,5 +1,6 @@
 {
   "files": {
+<<<<<<< HEAD
     "main.css": "/static/css/main.8514d219.css",
     "main.js": "/static/js/main.46e98e9b.js",
     "static/js/787.c4e7f8f9.chunk.js": "/static/js/787.c4e7f8f9.chunk.js",
@@ -12,5 +13,19 @@
   "entrypoints": [
     "static/css/main.8514d219.css",
     "static/js/main.46e98e9b.js"
+=======
+    "main.css": "/static/css/main.088d99e3.css",
+    "main.js": "/static/js/main.8eab9df2.js",
+    "static/js/787.c4e7f8f9.chunk.js": "/static/js/787.c4e7f8f9.chunk.js",
+    "static/media/SpotifyLogo.png": "/static/media/SpotifyLogo.37dfdbfbc25af46036d8.png",
+    "index.html": "/index.html",
+    "main.088d99e3.css.map": "/static/css/main.088d99e3.css.map",
+    "main.8eab9df2.js.map": "/static/js/main.8eab9df2.js.map",
+    "787.c4e7f8f9.chunk.js.map": "/static/js/787.c4e7f8f9.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.088d99e3.css",
+    "static/js/main.8eab9df2.js"
+>>>>>>> 439b91bda30e1a6b510410d14fad2a080e7ae9cd
   ]
 }

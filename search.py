@@ -6,6 +6,11 @@ from models import Song
 from sqlalchemy import create_engine, Column, Integer, String, MetaData
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+<<<<<<< HEAD
+=======
+#from dotenv import load_dotenv
+import random
+>>>>>>> 439b91bda30e1a6b510410d14fad2a080e7ae9cd
 
 #from dotenv import load_dotenv
 #load_dotenv()
@@ -66,20 +71,27 @@ def search_in_database(song_name):
     session = Session()
 
     # Query the database for the song
-    song = session.query(Song).filter_by(name=song_name).first()
+    song = session.query(Song).filter_by(name = song_name).first()
 
     session.close()
 
     if song:
         # Deserialize the song_data string into a Python dictionary
         song_data = json.loads(song.song_data)
+        songs_len = len(song_data)
+        song_idx = random.randint(0, songs_len - 1)
         
+<<<<<<< HEAD
         # Return the formatted data
         return {
             'id': song_data[0]['id'],
             'name': song.name,
             'artist': song_data[0]['artists'][0]['name']
         }
+=======
+        # Return the formatted string
+        return f"song: {song.name} by: {song_data[song_idx]['artists'][0]['name']}"
+>>>>>>> 439b91bda30e1a6b510410d14fad2a080e7ae9cd
     return None
     
 def search_for_song(token, song_name, max_pages=100):
