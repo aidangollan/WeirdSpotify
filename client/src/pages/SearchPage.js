@@ -41,6 +41,7 @@ function SearchPage() {
     return (
         <div>
             <LogoutButton />
+            <CreatePlaylistButton songIds={songIds} />
             <NavBar />
             <div className="container">
                 <SearchForm 
@@ -49,7 +50,6 @@ function SearchPage() {
                     onSubmit={handleSubmit}
                 />
                 <ResultsList songs={modifiedSongs} />
-                <CreatePlaylistButton songIds={songIds} />
             </div>
         </div>
     );
