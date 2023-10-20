@@ -4,6 +4,8 @@ function CreatePlaylistButton({ songIds }) {
     const apiUrl = `${window.location.origin}/api/create_playlist`;
 
     const handleCreatePlaylistClick = async () => {
+        console.log("Creating playlist...");
+        console.log(songIds);
         try {
             const response = await fetch(apiUrl, {
                 method: 'POST',

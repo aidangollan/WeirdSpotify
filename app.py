@@ -96,6 +96,8 @@ def create_playlist():
     print(user_token)
     
     song_ids = request.json.get("song_ids")
+    print(song_ids)
+    print("song ids")
     # You'll need to implement the function below to create a playlist using the Spotify API
     success = create_playlist_on_spotify(user_token, song_ids)
     
@@ -106,6 +108,8 @@ def create_playlist():
     
 def create_playlist_on_spotify(user_token, song_ids):
     print("in create playlist on spotify")
+    print("song_ids")
+    print(song_ids)
     SPOTIFY_API_BASE_URL = "https://api.spotify.com/v1"
     HEADERS = {
         "Authorization": f"Bearer {user_token}"
