@@ -12,6 +12,10 @@ async function handleFormSubmit(query) {
         const contentType = response.headers.get("content-type");
         if (contentType && contentType.indexOf("application/json") !== -1) {
             const data = await response.json();
+
+            console.log("data:", data);
+            console.log("data.songs:", data.songs);
+            console.log("data.error:", data.error);
             
             if (data.error) {
                 console.error(data.error);
