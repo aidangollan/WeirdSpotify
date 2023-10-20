@@ -16,20 +16,17 @@ function SearchPage() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const result = await handleFormSubmit(query);
-        if (result.error) {
-            console.error(result.error);
+        
+        if (Array.isArray(result.songs)) {
+            setSongs(result.songs);
         } else {
-            if (Array.isArray(result.songs)) {
-                setSongs(result.songs);
-            } else {
-                console.error("Received unexpected songs data format from server");
-            }
+            console.error("Received unexpected songs data format from server");
+        }
 
-            if (Array.isArray(result.errors)) {
-                setErrors(result.errors);
-            } else {
-                console.error("Received unexpected errors data format from server");
-            }
+        if (Array.isArray(result.errors)) {
+            setErrors(result.errors);
+        } else {
+            console.error("Received unexpected errors data format from server");
         }
     };
 
