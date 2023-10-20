@@ -85,7 +85,7 @@ def search_in_database(song_name):
         }
     return None
     
-def search_for_song(token, song_name, max_pages=100):
+def search_for_song(token, song_name, max_pages=5):
     url = "https://api.spotify.com/v1/search"
     headers = get_auth_header(token)
     base_query = f'?q={song_name}&type=track&market=US&limit={depth}'
