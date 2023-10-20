@@ -76,9 +76,7 @@ def search():
     query = request.json.get("query").strip(" ")
     result = search_algo(token, query)
     
-    if result:
-        return jsonify(names=result)
-    return jsonify(error="No songs found"), 404
+    return result
 
 @app.route("/search")
 def search_default():
