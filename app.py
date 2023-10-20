@@ -64,7 +64,7 @@ def get_session():
 @app.route('/api/logout')
 def logout():
     session.pop('token', None)
-    return redirect("/login")
+    return redirect("/")
 
 @app.route("/api/search", methods=["POST"])
 def search():
