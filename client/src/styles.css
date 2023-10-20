@@ -78,10 +78,66 @@ nav img {
 }
 
 .logout-button {
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 2rem; /* Increased padding for consistency */
     margin-top: 1rem;
-    background: linear-gradient(45deg, #FF5733, #FF2E00);
-    color: white;
+    background-color: #333; /* Changed to a muted gray */
+    color: #EAEAEA; /* Light gray text */
+    border: none;
+    border-radius: 25px; /* Consistent rounded corners */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+    font-size: 1rem;
+    display: block;
+}
+
+.logout-button:hover {
+    background-color: #444; /* Slightly darker gray on hover */
+    transform: translateY(-1px); 
+    box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+}
+
+.spotify-login-page {
+    text-align: center;
+    padding: 2rem;
+}
+
+.spotify-button {
+    display: block;
+    margin: 1rem auto;
+    padding: 0.5rem 2rem;
+    background-color: #1DB954;  /* Spotify green */
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.spotify-button:hover {
+    background-color: #189742;  /* Slightly darker green on hover */
+}
+
+.guest-button {
+    background-color: #333;  /* Muted color for the guest button */
+}
+
+.spotify-link {
+    display: block;
+    margin: 1rem 0;
+    color: #1DB954;  /* Spotify green for links */
+    text-decoration: none;
+}
+
+.spotify-link:hover {
+    text-decoration: underline;
+}
+
+.create-playlist-button {
+    padding: 0.5rem 2rem;
+    background: linear-gradient(45deg, #1DB954, #189742); /* Spotify green gradient */
+    color: #EAEAEA; /* Light gray text */
     border: none;
     border-radius: 25px;
     cursor: pointer;
@@ -91,7 +147,8 @@ nav img {
     display: block;
 }
 
-.logout-button:hover {
+.create-playlist-button:hover {
+    background-color: #189742; /* Slightly darker green on hover */
     transform: translateY(-1px); 
     box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
 }

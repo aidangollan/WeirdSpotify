@@ -28,7 +28,7 @@ function CreatePlaylistButton({ songIds }) {
     };
 
     return (
-        <button onClick={handleCreatePlaylistClick}>Create Playlist</button>
+        <button className="create-playlist-button" onClick={handleCreatePlaylistClick}>Create Playlist</button>
     );
 }
 
