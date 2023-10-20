@@ -21,7 +21,7 @@ db.init_app(app)
 # Spotify integration
 CLIENT_ID = os.getenv("CLIENT_ID")
 CLIENT_SECRET = os.getenv("CLIENT_SECRET")
-'''
+
 @app.route('/api/login')
 def login():
     is_guest = request.args.get('guest') == 'true'
@@ -30,6 +30,8 @@ def login():
         # Handle the guest login logic here, for example:
         # Set the session['user_type'] = 'guest'
         session['user_type'] = 'guest'
+        user_token = refresh_access_token(os.getenv('GUEST_REFRESH_TOKEN'))
+        session['token'] = user_token
         return redirect("/search")
 
     
@@ -42,28 +44,6 @@ def login():
         "scope": "playlist-modify-public",
         "client_id": CLIENT_ID
     }
-    url_args = "&".join(["{}={}".format(key, val) for key, val in auth_query_parameters.items()])
-    auth_url = "{}/?{}".format(os.getenv("AUTH_URL"), url_args)
-    return redirect(auth_url)
-'''
-
-@app.route('/api/login')
-def login():
-    is_guest = request.args.get('guest') == 'true'
-    
-    auth_query_parameters = {
-        "response_type": "code",
-        "redirect_uri": os.getenv("REDIRECT_URI"),
-        "client_id": CLIENT_ID
-    }
-    
-    if is_guest:
-        session['user_type'] = 'guest'
-        auth_query_parameters["scope"] = "user-read-private,playlist-modify-public"
-    else:
-        session['user_type'] = 'normal'
-        auth_query_parameters["scope"] = "playlist-modify-public"
-    
     url_args = "&".join(["{}={}".format(key, val) for key, val in auth_query_parameters.items()])
     auth_url = "{}/?{}".format(os.getenv("AUTH_URL"), url_args)
     return redirect(auth_url)
@@ -99,7 +79,6 @@ def callback():
     }
     post_request = requests.post(os.getenv("TOKEN_URL"), data=code_payload)
     response_data = post_request.json()
-    return jsonify(response_data)
     session['token'] = response_data["access_token"]
     
     print("Access Token:", session['token'])
@@ -130,17 +109,8 @@ def search_default():
 @app.route("/api/create_playlist", methods=["POST"])
 def create_playlist():
     print("in create playlist")
-    user_type = session.get('user_type', 'normal')
     user_token = session.get('token')
-    
-    if user_type == 'guest':
-        user_token = refresh_access_token("os.getenv('GUEST_REFRESH_TOKEN')")
-        if not user_token:
-            return jsonify(error="Failed to refresh token for dummy account"), 500
-    elif not user_token:
-        print("user not logged in")
-        return jsonify(error="User not logged in"), 401
-    
+
     print(user_token)
     
     song_ids = request.json.get("song_ids")
