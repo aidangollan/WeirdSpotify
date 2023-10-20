@@ -26,6 +26,12 @@ function SearchPage() {
         }
     };
 
+    const songIds = names.map(song => song.id);
+
+    // Log songIds and names
+    console.log("songIds:", songIds);
+    console.log("names:", names);
+
     return (
         <div>
             <LogoutButton />
