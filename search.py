@@ -44,7 +44,12 @@ def search_algo(token, query):
                 for entry in results:
                     song_name = entry["name"].lower()
                     if substring.lower() == song_name:
-                        out.append(f"song: {entry['name']} by: {entry['artists'][0]['name']}")
+                        song_data = {
+                            'id': entry['id'],
+                            'name': entry['name'],
+                            'artist': entry['artists'][0]['name']
+                        }
+                        out.append(song_data)
                         matched_indices.update(range(i, i + window_size))
                         unmatched_words.difference_update(words[i:i + window_size])
                         break
@@ -52,7 +57,7 @@ def search_algo(token, query):
     # Check if there are unmatched words and provide error messages for each one
     error_messages = [f"Error: word '{word}' was not found" for word in unmatched_words]
 
-    return out + error_messages
+    return {'songs': out, 'errors': error_messages}
 
 def search_in_database(song_name):
     """Search the song in the database"""
@@ -67,8 +72,12 @@ def search_in_database(song_name):
         # Deserialize the song_data string into a Python dictionary
         song_data = json.loads(song.song_data)
         
-        # Return the formatted string
-        return f"song: {song.name} by: {song_data[0]['artists'][0]['name']}"
+        # Return the formatted data
+        return {
+            'id': song.id,  # Assuming you have a unique ID for each song in your database
+            'name': song.name,
+            'artist': song_data[0]['artists'][0]['name']
+        }
     return None
     
 def search_for_song(token, song_name, max_pages=100):
