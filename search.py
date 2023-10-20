@@ -18,7 +18,7 @@ Session = sessionmaker(bind=engine)
 
 
 def search_algo(token, query):
-    words = query.split(" ")
+    words = [word for word in query.split() if word]
     out = []
     matched_indices = set()  # To keep track of matched word indices
     unmatched_words = set(words)  # New set to store unmatched words
