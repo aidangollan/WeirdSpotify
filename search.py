@@ -76,7 +76,7 @@ def search_in_database(song_name):
         
         # Return the formatted data
         return {
-            'id': song.id,  # Assuming you have a unique ID for each song in your database
+            'id': song_data[0]['id'],
             'name': song.name,
             'artist': song_data[0]['artists'][0]['name']
         }
