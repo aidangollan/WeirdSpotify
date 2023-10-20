@@ -21,7 +21,7 @@ db.init_app(app)
 # Spotify integration
 CLIENT_ID = os.getenv("CLIENT_ID")
 CLIENT_SECRET = os.getenv("CLIENT_SECRET")
-
+'''
 @app.route('/api/login')
 def login():
     is_guest = request.args.get('guest') == 'true'
@@ -42,6 +42,28 @@ def login():
         "scope": "playlist-modify-public",
         "client_id": CLIENT_ID
     }
+    url_args = "&".join(["{}={}".format(key, val) for key, val in auth_query_parameters.items()])
+    auth_url = "{}/?{}".format(os.getenv("AUTH_URL"), url_args)
+    return redirect(auth_url)
+'''
+
+@app.route('/api/login')
+def login():
+    is_guest = request.args.get('guest') == 'true'
+    
+    auth_query_parameters = {
+        "response_type": "code",
+        "redirect_uri": os.getenv("REDIRECT_URI"),
+        "client_id": CLIENT_ID
+    }
+    
+    if is_guest:
+        session['user_type'] = 'guest'
+        auth_query_parameters["scope"] = "user-read-private,playlist-modify-public"
+    else:
+        session['user_type'] = 'normal'
+        auth_query_parameters["scope"] = "playlist-modify-public"
+    
     url_args = "&".join(["{}={}".format(key, val) for key, val in auth_query_parameters.items()])
     auth_url = "{}/?{}".format(os.getenv("AUTH_URL"), url_args)
     return redirect(auth_url)
