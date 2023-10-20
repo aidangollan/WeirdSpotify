@@ -2,16 +2,10 @@ import React from 'react';
 
 function LoginPage() {
     const apiUrl = `${window.location.origin}/api/login`;
-    const guestUrl = `${window.location.origin}/search`;
 
-    const handleLoginClick = () => {
-        // Redirect to the /login route of your Flask app
-        window.location.href = apiUrl;
-    };
-
-    const handleGuestClick = () => {
-        // Redirect to the /login route of your Flask app
-        window.location.href = apiUrl;
+    const handleLoginClick = (isGuest) => {
+        const loginUrl = `${apiUrl}?guest=${isGuest}`;
+        window.location.href = loginUrl;
     };
 
     return (
@@ -24,8 +18,8 @@ function LoginPage() {
             <p>When using the app as a guest, the create playlist account 
                 will create the playlist on a dummy account.</p>
             <a href='https://open.spotify.com/user/313coyywkmhso4iirxmakjettsjq'>This account can be found here</a>
-            <button onClick={handleLoginClick}>Login with Spotify</button>
-            <button onClick={handleGuestClick}>Continue as Guest</button>
+            <button onClick={() => handleLoginClick(false)}>Login with Spotify</button>
+            <button onClick={() => handleLoginClick(true)}>Continue as Guest</button>
         </div>
     );
 }

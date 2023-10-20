@@ -6,9 +6,10 @@ from db import db
 import requests
 import os
 from flask_cors import CORS
+import base64
 
-#from dotenv import load_dotenv
-#load_dotenv()
+from dotenv import load_dotenv
+load_dotenv()
 
 
 app = Flask(__name__, static_folder='client/build', static_url_path='')
@@ -23,15 +24,46 @@ CLIENT_SECRET = os.getenv("CLIENT_SECRET")
 
 @app.route('/api/login')
 def login():
+    is_guest = request.args.get('guest') == 'true'
+    
+    if is_guest:
+        # Handle the guest login logic here, for example:
+        # Set the session['user_type'] = 'guest'
+        session['user_type'] = 'guest'
+        return redirect("/search")
+
+    
+    # If not a guest, proceed with Spotify login
+    session['user_type'] = 'normal'
+
     auth_query_parameters = {
         "response_type": "code",
         "redirect_uri": os.getenv("REDIRECT_URI"),
-        "scope": "playlist-modify-public",  # Only need permission to modify playlists
+        "scope": "playlist-modify-public",
         "client_id": CLIENT_ID
     }
     url_args = "&".join(["{}={}".format(key, val) for key, val in auth_query_parameters.items()])
     auth_url = "{}/?{}".format(os.getenv("AUTH_URL"), url_args)
     return redirect(auth_url)
+
+def refresh_access_token(refresh_token):
+    refresh_url = "https://accounts.spotify.com/api/token"
+    headers = {
+        'Authorization': f"Basic {base64.b64encode(f'{CLIENT_ID}:{CLIENT_SECRET}'.encode()).decode()}",
+    }
+    data = {
+        'grant_type': 'refresh_token',
+        'refresh_token': refresh_token
+    }
+    
+    response = requests.post(refresh_url, headers=headers, data=data)
+    if response.status_code == 200:
+        token_info = response.json()
+        return token_info['access_token']
+    else:
+        print("Error in refreshing token:", response.content)
+        return None
+
 
 @app.route('/api/callback')
 def callback():
@@ -45,25 +77,17 @@ def callback():
     }
     post_request = requests.post(os.getenv("TOKEN_URL"), data=code_payload)
     response_data = post_request.json()
-    print(response_data["access_token"])
+    return jsonify(response_data)
     session['token'] = response_data["access_token"]
-    print("session token")
-    print(session['token'])
+    
+    print("Access Token:", session['token'])
     
     return redirect("/search")
 
-@app.route('/set_session')
-def set_session():
-    session['dummy'] = 'This is a test'
-    return 'Session set'
-
-@app.route('/get_session')
-def get_session():
-    return session.get('dummy', 'No session value')
-
 @app.route('/api/logout')
 def logout():
-    session.pop('token', None)
+    if session.get('user_type') == 'normal':
+        session.pop('token', None)
     return redirect("/")
 
 @app.route("/api/search", methods=["POST"])
@@ -84,11 +108,15 @@ def search_default():
 @app.route("/api/create_playlist", methods=["POST"])
 def create_playlist():
     print("in create playlist")
+    user_type = session.get('user_type', 'normal')
     user_token = session.get('token')
-    dummy = session.get('dummy')
-    if not user_token:
+    
+    if user_type == 'guest':
+        user_token = refresh_access_token("os.getenv('GUEST_REFRESH_TOKEN')")
+        if not user_token:
+            return jsonify(error="Failed to refresh token for dummy account"), 500
+    elif not user_token:
         print("user not logged in")
-        print(user_token)
         return jsonify(error="User not logged in"), 401
     
     print(user_token)
