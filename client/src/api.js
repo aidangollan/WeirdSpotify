@@ -17,12 +17,20 @@ async function handleFormSubmit(query) {
                 console.error(data.error);
                 return { error: data.error };
             } else {
-                // Scroll to results
-                const resultsDiv = document.getElementById('resultsList');
-                const position = resultsDiv.offsetTop - (window.innerHeight / 2) + (resultsDiv.offsetHeight / 2);
-                window.scrollTo({ top: position, behavior: 'smooth' });
-            
-                return { names: data.names };
+                if (Array.isArray(data.songs) && data.songs.every(song => song.id && song.name && song.artist)) {
+                    // Optionally, handle data.errors here if you want to display them
+                    // ...
+
+                    // Scroll to results
+                    const resultsDiv = document.getElementById('resultsList');
+                    const position = resultsDiv.offsetTop - (window.innerHeight / 2) + (resultsDiv.offsetHeight / 2);
+                    window.scrollTo({ top: position, behavior: 'smooth' });
+
+                    return { names: data.songs };
+                } else {
+                    console.error("Received unexpected data format from server.");
+                    return { error: "Received unexpected data format from server." };
+                }
             }
         } else {
             console.error("Received non-JSON response from the server.");

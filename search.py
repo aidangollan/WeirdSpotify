@@ -7,8 +7,8 @@ from sqlalchemy import create_engine, Column, Integer, String, MetaData
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-#from dotenv import load_dotenv
-#load_dotenv()
+from dotenv import load_dotenv
+load_dotenv()
 
 depth = "50"
 DATABASE_URI = os.getenv("DATABASE_URL")
@@ -57,6 +57,8 @@ def search_algo(token, query):
     # Check if there are unmatched words and provide error messages for each one
     error_messages = [f"Error: word '{word}' was not found" for word in unmatched_words]
 
+    print(f"out: {out}")
+    print(f"errors: {error_messages}")
     return {'songs': out, 'errors': error_messages}
 
 def search_in_database(song_name):

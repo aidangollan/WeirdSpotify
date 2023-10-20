@@ -9,7 +9,7 @@ import LogoutButton from '../components/LogoutButton';
 import CreatePlaylistButton from '../components/CreatePlaylistButton';
 
 function SearchPage() {
-    const [names, setNames] = useState([]);
+    const [songs, setSongs] = useState([]);
     const [query, setQuery] = useState('');
 
     const handleSubmit = async (e) => {
@@ -19,18 +19,18 @@ function SearchPage() {
             console.error(result.error);
         } else {
             if (Array.isArray(result.names)) {
-                setNames(result.names);
+                setSongs(result.names);
             } else {
                 console.error("Received unexpected data format from server");
             }
         }
     };
 
-    const songIds = names.map(song => song.id);
+    const songIds = songs.map(song => song.id);
 
-    // Log songIds and names
+    // Log songIds and song details
     console.log("songIds:", songIds);
-    console.log("names:", names);
+    console.log("songs:", songs);
 
     return (
         <div>
@@ -42,8 +42,8 @@ function SearchPage() {
                     onQueryChange={e => setQuery(e.target.value)}
                     onSubmit={handleSubmit}
                 />
-                <ResultsList names={names} />
-                <CreatePlaylistButton songIds={names.map(song => song.id)} />
+                <ResultsList songs={songs} />
+                <CreatePlaylistButton songIds={songIds} />
             </div>
         </div>
     );

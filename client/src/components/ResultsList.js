@@ -1,12 +1,10 @@
 import React from 'react';
 
-function ResultsList({ names }) {
+function ResultsList({ songs }) {
     return (
         <ul id="resultsList">
-            {names.map(song => (
-                <li key={song.id}>
-                    {song.name} by {song.artist}
-                </li>
+            {songs.map(song => (
+                <li key={song.id}>{song.name} by {song.artist}</li>
             ))}
         </ul>
     );

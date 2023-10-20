@@ -7,8 +7,8 @@ import requests
 import os
 from flask_cors import CORS
 
-#from dotenv import load_dotenv
-#load_dotenv()
+from dotenv import load_dotenv
+load_dotenv()
 
 
 app = Flask(__name__, static_folder='client/build', static_url_path='')
@@ -71,6 +71,7 @@ def logout():
 
 @app.route("/api/search", methods=["POST"])
 def search():
+    print("in search")
     token = get_token() #my token, not user, used for searching for songs
     query = request.json.get("query").strip(" ")
     result = search_algo(token, query)
