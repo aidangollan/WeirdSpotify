@@ -48,8 +48,8 @@ function SearchPage() {
                     onQueryChange={e => setQuery(e.target.value)}
                     onSubmit={handleSubmit}
                 />
-                <ResultsList songs={songs} />
-                <CreatePlaylistButton songIds={modifiedSongs} />
+                <ResultsList songs={modifiedSongs} />
+                <CreatePlaylistButton songIds={songIds} />
             </div>
         </div>
     );
