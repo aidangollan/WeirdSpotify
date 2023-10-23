@@ -42,8 +42,10 @@ function SearchPage() {
 
     return (
         <div>
-            <LogoutButton />
-            <CreatePlaylistButton songIds={songIds} />
+            <div className="button-container">
+                <LogoutButton />
+                <CreatePlaylistButton songIds={songIds} />
+            </div>
             <NavBar />
             <div className="container">
                 <SearchForm 

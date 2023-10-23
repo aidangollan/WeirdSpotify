@@ -145,12 +145,50 @@ nav img {
     box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
     font-size: 1rem;
     display: block;
+    margin-bottom: 1rem;
 }
 
 .create-playlist-button:hover {
     background-color: #189742; /* Slightly darker green on hover */
     transform: translateY(-1px); 
     box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between; /* Distribute the space between the buttons */
+    margin-bottom: 1rem; /* Space before the navigation bar */
+}
+
+/* Styling for the playlist link */
+.playlist-link {
+    display: inline-block;
+    padding: 0.5rem 2rem;
+    background: #333; /* Muted gray background */
+    color: #EAEAEA; /* Light gray text */
+    border-radius: 25px; /* Rounded corners */
+    text-decoration: none; /* Remove the underline */
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    margin-left: 1rem; /* Space between the Create Playlist button and the link */
+}
+
+/* Enhancing the hover effect for the playlist link */
+.playlist-link:hover {
+    background-color: #444; /* Slightly darker gray on hover */
+    transform: translateY(-1px); 
+    box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+}
+
+#resultsList li {
+    display: flex;
+    align-items: center;
+}
+
+#resultsList img {
+    border-radius: 4px;
+    margin-right: 1rem;
 }
 
 /* Responsive Styles for Mobile */

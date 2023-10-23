@@ -48,7 +48,8 @@ def search_algo(token, query):
                         song_data = {
                             'id': entry['id'],
                             'name': entry['name'],
-                            'artist': entry['artists'][0]['name']
+                            'artist': entry['artists'][0]['name'],
+                            'image_url': entry['album']['images'][0]['url'] if entry['album']['images'] else None
                         }
                         out.append(song_data)
                         matched_indices.update(range(i, i + window_size))
@@ -81,7 +82,8 @@ def search_in_database(song_name):
         return {
             'id': song_data[song_idx]['id'],
             'name': song.name,
-            'artist': song_data[song_idx]['artists'][0]['name']
+            'artist': song_data[song_idx]['artists'][0]['name'],
+            'image_url': song_data[song_idx]['album']['images'][0]['url'] if song_data[song_idx]['album']['images'] else None
         }
     return None
     

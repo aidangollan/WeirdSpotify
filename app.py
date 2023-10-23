@@ -120,13 +120,15 @@ def create_playlist():
     song_ids = request.json.get("song_ids")
     print(song_ids)
     print("song ids")
-    # You'll need to implement the function below to create a playlist using the Spotify API
-    success = create_playlist_on_spotify(user_token, song_ids)
+
+    response_data = create_playlist_on_spotify(user_token, song_ids)
+
+    print(response_data)
     
-    if success:
-        return jsonify(success=True, message="Playlist created successfully")
+    if response_data["success"]:
+        return jsonify(response_data)
     else:
-        return jsonify(success=False, message="Failed to create playlist"), 500
+        return jsonify(response_data), 500
     
 def create_playlist_on_spotify(user_token, song_ids):
     print("in create playlist on spotify")
@@ -171,10 +173,22 @@ def create_playlist_on_spotify(user_token, song_ids):
     print(add_tracks_request.status_code)
     print("add tracks request status code")
 
-    if add_tracks_request.status_code == 201:  # 201 means tracks added successfully
-        return True
+    if add_tracks_request.status_code == 201:
+        print("success")
+        print(new_playlist_data['external_urls']['spotify'])
+        return {
+            "success": True,
+            "message": "Playlist created successfully",
+            "playlist_url": new_playlist_data['external_urls']['spotify']
+        }
     else:
-        return False
+        print("failed")
+        print(add_tracks_response)
+        return {
+            "success": False,
+            "message": "Failed to add tracks to the playlist",
+            "playlist_url": None
+        }
 
 @app.route("/", defaults={"path": ""})
 @app.route("/<path:path>")
