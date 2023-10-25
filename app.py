@@ -7,6 +7,7 @@ import requests
 import os
 from flask_cors import CORS
 import base64
+import time
 
 #from dotenv import load_dotenv
 #load_dotenv()
@@ -172,6 +173,8 @@ def create_playlist_on_spotify(user_token, song_ids):
 
     print(add_tracks_request.status_code)
     print("add tracks request status code")
+
+    time.sleep(.5)
 
     if add_tracks_request.status_code == 201:
         print("success")

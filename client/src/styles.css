@@ -65,9 +65,11 @@ li {
     border-bottom: 1px solid #333;
 }
 
+/* NavBar Styles */
 nav {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     margin-bottom: 2rem;
 }
 
@@ -75,24 +77,59 @@ nav img {
     max-width: 100%;
     height: auto;
     width: 20%;
+    margin-bottom: 1rem; /* Adds space between the logo and the button-container */
 }
 
+.button-container {
+    display: flex;
+    justify-content: space-between; /* Distribute the space between the buttons */
+    width: 100%; /* Takes full width to push buttons to edges */
+    align-items: center;
+    padding: 0 1rem; /* Adds padding to the sides to ensure buttons don't touch edges */
+}
+
+/* Updated LogoutButton styles */
 .logout-button {
-    padding: 0.5rem 2rem; /* Increased padding for consistency */
-    margin-top: 1rem;
-    background-color: #333; /* Changed to a muted gray */
-    color: #EAEAEA; /* Light gray text */
+    justify-self: flex-start; /* Aligns the button to the start (left side) */
+    align-self: flex-start;
+}
+
+/* New styles for the go-to-playlist-button */
+.go-to-playlist-button {
+    padding: 0.5rem 2rem;
+    background: linear-gradient(45deg, #1DB954, #189742);
+    color: #EAEAEA;
     border: none;
-    border-radius: 25px; /* Consistent rounded corners */
+    border-radius: 25px;
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
     font-size: 1rem;
-    display: block;
+    justify-self: flex-end; /* Aligns the button to the end (right side) */
+    align-self: flex-end;
+}
+
+.go-to-playlist-button:hover {
+    background-color: #189742;
+    transform: translateY(-1px);
+    box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+}
+
+/* Updated styles for the logout-button */
+.logout-button {
+    padding: 0.5rem 2rem;
+    background-color: #333;
+    color: #EAEAEA;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+    font-size: 1rem;
 }
 
 .logout-button:hover {
-    background-color: #444; /* Slightly darker gray on hover */
+    background-color: #444;
     transform: translateY(-1px); 
     box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
 }

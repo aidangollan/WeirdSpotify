@@ -45,7 +45,7 @@ function PlaylistButton({ songIds }) {
     if (songIds && songIds.length > 0) {
         return (
             <button className="go-to-playlist-button" onClick={handleGoToPlaylistClick}>
-                View Playlist On Spotify
+                View On Spotify
             </button>
         );
     } else {
