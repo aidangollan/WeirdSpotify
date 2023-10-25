@@ -15,7 +15,7 @@ import time
 
 app = Flask(__name__, static_folder='client/build', static_url_path='')
 CORS(app, supports_credentials=True)
-app.secret_key = 'some_secret'  # Change this to a proper secret key in production!
+app.secret_key = os.getenv("SECRET_KEY")
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
 db.init_app(app)
 
@@ -109,6 +109,12 @@ def search():
 
 @app.route("/search")
 def search_default():
+    print("in search default")
+    if session.get('user_type') is None:
+        print("no user type")
+        return redirect("/")
+    print("user exists")
+    print(session.get('user_type'))
     return send_from_directory(app.static_folder, 'index.html')
 
 @app.route("/api/create_playlist", methods=["POST"])
