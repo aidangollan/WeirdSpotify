@@ -17,7 +17,6 @@ function LoginPage() {
                 Others will have to use guest mode.</p>
             <p>When using the app as a guest, the create playlist account 
                 will create the playlist on a dummy account.</p>
-            <a className="spotify-link" href='https://open.spotify.com/user/313coyywkmhso4iirxmakjettsjq'>This account can be found here</a>
             <button className="spotify-button" onClick={() => handleLoginClick(false)}>Login with Spotify (Approval Needed!)</button>
             <button className="spotify-button guest-button" onClick={() => handleLoginClick(true)}>Continue as Guest</button>
         </div>
