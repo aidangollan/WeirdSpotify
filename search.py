@@ -57,7 +57,7 @@ def search_algo(token, query):
                         break
 
     # Check if there are unmatched words and provide error messages for each one
-    error_messages = [f"Error: word '{word}' was not found" for word in unmatched_words]
+    error_messages = [f"Error: word '{word}' is not a Spotify Song" for word in unmatched_words]
 
     print(f"out: {out}")
     print(f"errors: {error_messages}")

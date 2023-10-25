@@ -5,8 +5,6 @@ import '../styles.css';
 import NavBar from '../components/NavBar';
 import SearchForm from '../components/SearchForm';
 import ResultsList from '../components/ResultsList';
-import LogoutButton from '../components/LogoutButton';
-import CreatePlaylistButton from '../components/CreatePlaylistButton';
 
 function SearchPage() {
     const [songs, setSongs] = useState([]);
@@ -42,11 +40,7 @@ function SearchPage() {
 
     return (
         <div>
-            <div className="button-container">
-                <LogoutButton />
-                <CreatePlaylistButton songIds={songIds} />
-            </div>
-            <NavBar />
+            <NavBar songIds={songIds}/>
             <div className="container">
                 <SearchForm 
                     query={query} 
