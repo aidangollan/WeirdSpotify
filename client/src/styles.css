@@ -228,6 +228,20 @@ nav img {
     margin-right: 1rem;
 }
 
+input[type="submit"] {
+    padding: 0.5rem 1rem;
+    background: linear-gradient(45deg, #1DB954, #189742);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+    width: 33.33%;
+    line-height: 1.5;  /* New line to adjust the line height */
+    vertical-align: middle;  /* New line to vertically align the text */
+}
+
 /* Responsive Styles for Mobile */
 @media (max-width: 768px) {
     body {

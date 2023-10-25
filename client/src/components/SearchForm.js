@@ -12,7 +12,7 @@ function SearchForm({ query, onQueryChange, onSubmit }) {
                 placeholder="Enter your sentence here..."
                 required
             />
-            <input type="submit" value="Create Playlist" />
+            <input type="submit" value="Search" />
         </form>
     );
 }
