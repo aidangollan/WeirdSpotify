@@ -1,15 +1,97 @@
 /* General Styles */
 body {
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
     font-family: 'Lato', sans-serif;
     background-color: #1A1A2E;
     color: #EAEAEA;
-    padding: 5% 15%;
+    background-image: linear-gradient(to bottom, #1A1A2E, #16213E);
+}
+
+h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2.5rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background-image: linear-gradient(to right, #1DB954, #1B6F22);
+    color: transparent; /* This makes the text color transparent */
+    -webkit-background-clip: text; /* For Safari */
+    background-clip: text; /* Standard property */
+    animation: shine 5s linear infinite;
+    display: inline-block; /* Required for background-clip to work */
+}
+
+@keyframes shine {
+    0% { background-position: right; }
+    100% { background-position: left; }
+}
+
+button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+button::before {
+    content: '';
+    position: absolute;
+    background: linear-gradient(45deg, #1DB954, #1B6F22, #189742);
+    top: 0;
+    left: -100%;
+    width: 300%;
+    height: 100%;
+    z-index: -1;
+    transition: all 0.5s ease;
+}
+
+button:hover::before {
+    left: 0;
+}
+
+button:hover {
+    color: #000;
+    background: #fff;
+    box-shadow: 0 0 10px #1DB954;
 }
 
 .container {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
     padding: 2rem;
+    width: 50%;
+    max-width: 1200px;
+    margin: 0 auto;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     border-radius: 5px;
+}
+
+.spotify-link:hover, .playlist-link:hover {
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: none;
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 20px #1DB954;
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: none;
+    }
 }
 
 /* Form Styles */
@@ -19,6 +101,7 @@ form {
     gap: 1rem;
     margin-bottom: 2rem;
     align-items: center;
+    width: 100%;
 }
 
 label {
@@ -92,6 +175,7 @@ nav img {
 .logout-button {
     justify-self: flex-start; /* Aligns the button to the start (left side) */
     align-self: flex-start;
+    margin-left: 25%; 
 }
 
 /* New styles for the go-to-playlist-button */
@@ -107,6 +191,7 @@ nav img {
     font-size: 1rem;
     justify-self: flex-end; /* Aligns the button to the end (right side) */
     align-self: flex-end;
+    margin-right: 25%; 
 }
 
 .go-to-playlist-button:hover {
