@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles.css';
 
 function LoginPage() {
     const apiUrl = `${window.location.origin}/api/login`;
@@ -11,12 +12,14 @@ function LoginPage() {
     return (
         <div className="spotify-login-page">
             <h1>Welcome to Weird Spotify!</h1>
-            <p>This project allows you to do what you've always wanted to but never could</p>
-            <br />
-            <p>Turn a sentence into a Spotify Playlist!!</p>
-            <br />
-            <p>Enter any sentence, in any language, then watch the magic happen!</p>
-            <button className="spotify-button guest-button" onClick={() => handleLoginClick(true)}>Lets Go!</button>
+            <p>
+                This project lets you do something you've probably been waiting your whole life for...
+                <br/>
+                <strong>turn a sentence into a Spotify Playlist!!!</strong>
+                <br/>
+                No matter the language, input your sentence and prepare to be amazed.
+            </p>
+            <button className="spotify-button guest-button" onClick={() => handleLoginClick(true)}>Let's Go!</button>
         </div>
     );
 }

@@ -69,6 +69,40 @@ h1 {
     z-index: 10; /* Ensure it's above other elements */
 }
 
+.spotify-login-page {
+    text-align: center;
+    padding: 2rem;
+    color: #EAEAEA;
+}
+
+.spotify-login-page h1 {
+    margin-bottom: 1rem; /* Adds more space below the heading */
+    color: #1DB954; /* Spotify's brand color for emphasis */
+}
+
+.spotify-login-page p {
+    font-size: 1.1rem;
+    line-height: 1.6; /* Increases line height for better readability */
+    margin-bottom: 1.5rem; /* Adds more space below the paragraph */
+}
+
+.spotify-login-page p strong {
+    color: #1DB954; /* Adds Spotify's brand color for emphasis */
+    font-weight: bold; /* Makes the text bold */
+}
+
+.spotify-button {
+    font-size: 1.2rem;
+    padding: 1rem 2rem;
+    margin-top: 2rem; /* Adds space above the button */
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.spotify-button:hover {
+    background-color: #17a34a; /* A lighter green for hover state */
+    transform: scale(1.05); /* Slightly enlarges the button on hover */
+}
+
 button {
     display: inline-block;
     padding: 10px 20px;
