@@ -10,6 +10,40 @@ body {
     overflow-x: hidden;
 }
 
+body::before {
+    content: '';
+    position: fixed; /* or 'absolute' */
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1; /* to keep it below the content */
+  
+    background: linear-gradient(
+      120deg,
+      #1A1A2E,
+      #16213E,
+      #0F3460,
+      #16213E,
+      #1A1A2E
+    );
+    background-size: 200% 200%; /* large size to allow movement */
+  
+    animation: shiftGradient 30s ease infinite; /* adjust time to control speed */
+}
+  
+@keyframes shiftGradient {
+0% {
+    background-position: 0% 50%;
+}
+50% {
+    background-position: 100% 50%;
+}
+100% {
+    background-position: 0% 50%;
+}
+}
+
 h1 {
     font-family: 'Montserrat', sans-serif;
     font-size: 2.5rem;
@@ -28,28 +62,55 @@ h1 {
     100% { background-position: left; }
 }
 
-@keyframes enterAndSpin {
-    0% { right: 100%; transform: translateY(-50%) rotate(0deg); }
-    100% { right: calc(50% - 127.5px); transform: translateY(-50%) rotate(360deg); }
+.logo-fixed {
+    position: fixed; /* Fixed positioning relative to the viewport */
+    right: 50%; /* Center horizontally */
+    top: 30%; /* Center vertically */
+    transform: translate(-50%, -50%); /* Offset the element to center it correctly */
+    z-index: 10; /* Ensure it's above other elements */
+    display: block; /* Make the logo take up space and be part of the layout */
+    opacity: 1;
+    transition: opacity 0.5s linear;
 }
 
+@keyframes enterAndSpin {
+    0% { 
+        right: 100vw; /* Start off the right edge of the viewport */
+        transform: translateX(-50%) translateY(-50%) rotate(0deg); 
+    }
+    100% { 
+        right: calc(50vw - 256px); /* Center based on the element's width */
+        transform: translateX(-50%) translateY(-50%) rotate(360deg); 
+    }
+}
+
+@keyframes spin {
+    0% { 
+        transform: translateX(-50%) translateY(-50%) rotate(0deg); 
+    }
+    100% { 
+        transform: translateX(-50%) translateY(-50%) rotate(360deg); 
+    }
+}
+
+@keyframes exit {
+    0% { 
+        right: calc(50vw - 256px); /* Center based on the element's width */
+        transform: translateX(-50%) translateY(-50%); 
+    }
+    100% { 
+        right: -100vw; /* Move off the left edge of the viewport */
+        transform: translateX(-50%) translateY(-50%); 
+    }
+}
+
+/* Set the specific animations for each state */
 .logo-entering-spinning {
     animation: enterAndSpin 2s forwards, spin 1s linear infinite 2s;
 }
 
-@keyframes spin {
-    from { transform: translateY(-50%) rotate(0deg); }
-    to { transform: translateY(-50%) rotate(360deg); }
-}
-
-@keyframes exit {
-    from { right: 50%; transform: translateY(-50%); }
-    to { right: -100%; transform: translateY(-50%); }
-}
-
 .logo-spinning {
     animation: spin 1s linear infinite;
-    /* Reduced the duration to 1s for a faster spin */
 }
 
 .logo-exiting {
@@ -57,15 +118,14 @@ h1 {
 }
 
 .logo-idle {
-    right: -100%; /* Move it off-screen when idle */
-    transform: translateY(-50%);
+    display: none; /* Ensures the element does not take up any space */
+    opacity: 0;
 }
 
 .spotify-logo {
     position: absolute;
     right: -100%; /* Start off-screen */
     top: 30%; /* Center vertically */
-    transform: translateY(-50%); /* Move up slightly */
     z-index: 10; /* Ensure it's above other elements */
 }
 
@@ -91,53 +151,97 @@ h1 {
     font-weight: bold; /* Makes the text bold */
 }
 
-.spotify-button {
-    font-size: 1.2rem;
-    padding: 1rem 2rem;
-    margin-top: 2rem; /* Adds space above the button */
-    transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-.spotify-button:hover {
-    background-color: #17a34a; /* A lighter green for hover state */
-    transform: scale(1.05); /* Slightly enlarges the button on hover */
-}
-
-button {
+/* General button styling */
+button,
+.spotify-button,
+.logout-button,
+.guest-button,
+.create-playlist-button,
+.playlist-link,
+input[type="submit"] {
     display: inline-block;
-    padding: 10px 20px;
-    font-size: 1.2rem;
+    padding: 0.5rem 2rem;
+    font-size: 1rem;
     color: #fff;
+    background-color: #333; /* Default gray background */
     border: none;
-    border-radius: 50px;
+    border-radius: 25px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
     position: relative;
     overflow: hidden;
     z-index: 1;
     box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
-button::before {
-    content: '';
-    position: absolute;
-    background: linear-gradient(45deg, #1DB954, #1B6F22, #189742);
-    top: 0;
-    left: -100%;
-    width: 300%;
+/* Hover effect for all buttons */
+button:hover,
+.spotify-button:hover,
+.logout-button:hover,
+.guest-button:hover,
+.create-playlist-button:hover,
+.playlist-link:hover,
+input[type="submit"]:hover {
+    background-color: #1DB954; /* Light up green on hover */
+    color: #fff; /* Ensure text color is white on hover for visibility */
+    transform: scale(1.05);
+    box-shadow: 0 0 10px #1DB954; /* Green shadow */
+}
+
+/* Specific styling for Spotify button to override the default gray */
+.spotify-button {
+    background-color: #1DB954;
+    margin: 1rem auto;
+}
+
+/* Spotify button hover effect */
+.spotify-button:hover {
+    background-color: #17a34a; /* A lighter green for hover state */
+}
+
+/* Create Playlist button specific styling */
+.create-playlist-button {
+    background: linear-gradient(45deg, #1DB954, #189742); /* Spotify green gradient */
+    color: #EAEAEA; /* Light gray text */
+}
+
+/* Playlist link specific styling */
+.playlist-link {
+    color: #EAEAEA; /* Light gray text */
+    text-decoration: none; /* Remove the underline */
+}
+
+/* Adjust the submit button width if necessary */
+input[type="submit"] {
+    width: 33.33%; /* Adjust the width as per your design */
+    margin: auto; /* If you want to center the submit button */
+    display: block; /* Change from inline-block to block if it needs to be on a new line */
+}
+
+/* Ensuring text is vertically centered in buttons and links */
+button,
+.spotify-button,
+.logout-button,
+.guest-button,
+.create-playlist-button,
+.playlist-link,
+input[type="submit"] {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 100%;
-    z-index: -1;
-    transition: all 0.5s ease;
+    text-align: center;
 }
 
-button:hover::before {
-    left: 0;
+.create-playlist-button,
+.logout-button {
+    flex: 1; /* This will allow the buttons to share the available space equally */
 }
 
-button:hover {
-    color: #000;
-    background: #fff;
-    box-shadow: 0 0 10px #1DB954;
+.button-container {
+    display: flex;
+    justify-content: center; /* This will place items side by side and center them */
+    gap: 1rem; /* Adjust the gap between buttons as needed */
 }
 
 .container {
@@ -150,6 +254,12 @@ button:hover {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     border-radius: 5px;
     position: relative;
+}
+
+.logo-wrapper{
+    position: relative;
+    width: 100%;
+    height: 100%;
 }
 
 .spotify-link:hover, .playlist-link:hover {
@@ -197,23 +307,6 @@ input[type="text"] {
     color: #EAEAEA;
 }
 
-input[type="submit"] {
-    padding: 0.5rem 1rem;
-    background: linear-gradient(45deg, #1DB954, #189742);
-    color: white;
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
-    width: 33.33%;
-}
-
-input[type="submit"]:hover {
-    transform: translateY(-1px); /* subtle move up */
-    box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08); /* Enhanced shadow on hover */
-}
-
 /* Results List Styles */
 ul {
     list-style-type: none;
@@ -240,86 +333,13 @@ nav img {
     margin-bottom: 1rem; /* Adds space between the logo and the button-container */
 }
 
-.button-container {
-    display: flex;
-    justify-content: space-between; /* Distribute the space between the buttons */
-    width: 100%; /* Takes full width to push buttons to edges */
-    align-items: center;
-    padding: 0 1rem; /* Adds padding to the sides to ensure buttons don't touch edges */
-}
-
-/* Updated LogoutButton styles */
-.logout-button {
-    justify-self: flex-start; /* Aligns the button to the start (left side) */
-    align-self: flex-start;
-    margin-left: 25%; 
-}
-
-/* New styles for the go-to-playlist-button */
-.go-to-playlist-button {
-    padding: 0.5rem 2rem;
-    background: linear-gradient(45deg, #1DB954, #189742);
-    color: #EAEAEA;
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
-    font-size: 1rem;
-    justify-self: flex-end; /* Aligns the button to the end (right side) */
-    align-self: flex-end;
-    margin-right: 25%; 
-}
-
-.go-to-playlist-button:hover {
-    background-color: #189742;
-    transform: translateY(-1px);
-    box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
-}
-
-/* Updated styles for the logout-button */
-.logout-button {
-    padding: 0.5rem 2rem;
-    background-color: #333;
-    color: #EAEAEA;
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
-    font-size: 1rem;
-}
-
-.logout-button:hover {
-    background-color: #444;
-    transform: translateY(-1px); 
-    box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
-}
-
 .spotify-login-page {
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* This will center the button horizontally */
+    justify-content: center; /* This will help center the content vertically if needed */
     padding: 2rem;
-}
-
-.spotify-button {
-    display: block;
-    margin: 1rem auto;
-    padding: 0.5rem 2rem;
-    background-color: #1DB954;  /* Spotify green */
-    color: #fff;
-    border: none;
-    border-radius: 25px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.spotify-button:hover {
-    background-color: #189742;  /* Slightly darker green on hover */
-}
-
-.guest-button {
-    background-color: #333;  /* Muted color for the guest button */
+    text-align: center;
 }
 
 .spotify-link {
@@ -331,53 +351,6 @@ nav img {
 
 .spotify-link:hover {
     text-decoration: underline;
-}
-
-.create-playlist-button {
-    padding: 0.5rem 2rem;
-    background: linear-gradient(45deg, #1DB954, #189742); /* Spotify green gradient */
-    color: #EAEAEA; /* Light gray text */
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
-    font-size: 1rem;
-    display: block;
-    margin-bottom: 1rem;
-}
-
-.create-playlist-button:hover {
-    background-color: #189742; /* Slightly darker green on hover */
-    transform: translateY(-1px); 
-    box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
-}
-
-.button-container {
-    display: flex;
-    justify-content: space-between; /* Distribute the space between the buttons */
-    margin-bottom: 1rem; /* Space before the navigation bar */
-}
-
-/* Styling for the playlist link */
-.playlist-link {
-    display: inline-block;
-    padding: 0.5rem 2rem;
-    background: #333; /* Muted gray background */
-    color: #EAEAEA; /* Light gray text */
-    border-radius: 25px; /* Rounded corners */
-    text-decoration: none; /* Remove the underline */
-    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
-    transition: all 0.3s ease;
-    font-size: 1rem;
-    margin-left: 1rem; /* Space between the Create Playlist button and the link */
-}
-
-/* Enhancing the hover effect for the playlist link */
-.playlist-link:hover {
-    background-color: #444; /* Slightly darker gray on hover */
-    transform: translateY(-1px); 
-    box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
 }
 
 #resultsList li {
@@ -404,20 +377,78 @@ input[type="submit"] {
     vertical-align: middle;  /* New line to vertically align the text */
 }
 
+.falling-logo {
+    animation: waterfall_spin 3s linear infinite, waterfall_fall 10s linear infinite;
+    will-change: transform; /* Optimizes for animations */
+}
+  
+@keyframes waterfall_spin {
+    from {
+        transform: translateX(-50%) rotate(0deg);
+    }
+    to {
+        transform: translateX(-50%) rotate(360deg);
+    }
+}
+  
+@keyframes waterfall_fall {
+    0%, 100% {
+        top: -50px; /* Start and end off-screen */
+        opacity: 0;
+    }
+    5%, 95% {
+        opacity: 1; /* Fully visible for most of the animation */
+    }
+    50% {
+        top: calc(50vh - 50px); /* Position at the middle of the screen */
+    }
+    100% {
+        top: 100vh; /* End at the bottom of the screen */
+    }
+}
+
+@keyframes waterfall_fallAndSpin {
+    0% {
+      top: -50px; /* Start above the screen */
+      transform: translateX(-50%) rotate(0deg);
+      opacity: 0;
+    }
+    10% {
+      opacity: 1;
+    }
+    90% {
+      transform: translateX(-50%) rotate(calc(360deg * (90 / 100)));
+      opacity: 1;
+    }
+    100% {
+      top: 100vh; /* Fall to the bottom of the screen */
+      transform: translateX(-50%) rotate(360deg);
+      opacity: 0;
+    }
+  }
+
 /* Responsive Styles for Mobile */
 @media (max-width: 768px) {
     body {
         padding: 10% 5%;
-        overflow-x: hidden; /* Prevent horizontal scrolling */
+    }
+
+    .button-container {
+        flex-direction: column; /* Stack buttons vertically on mobile */
+        align-items: stretch;
+    }
+
+    .no-wrap{
+        overflow-x: hidden;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
     }
     
     form {
         margin-top: 20vh;
-    }
-
-    input[type="text"] {
-        font-size: 1.5rem;
-        padding: 0.8rem;
     }
 
     nav img {

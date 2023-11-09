@@ -44,23 +44,13 @@ function SearchPage() {
 
     const songIds = modifiedSongs.map(song => song.id);
 
-    console.log("songIds:", songIds);
-    console.log("songs:", songs);
-
     return (
-        <div>
+        <div className='no-extend-wrapper'>
             <NavBar songIds={songIds}/>
-            <div className="container">
-                <SearchForm 
-                    query={query} 
-                    onQueryChange={e => setQuery(e.target.value)}
-                    onSubmit={handleSubmit}
-                />
-                <ResultsList songs={modifiedSongs} errors={errors} />
-            </div>
+            <div className='logo-wrapper'>
             <img 
                 src={SpotifyLogo9}
-                className={`spotify-logo ${
+                className={`logo-fixed ${
                     animationState === 'entering-spinning'
                         ? 'logo-entering-spinning'
                         : animationState === 'exiting'
@@ -69,6 +59,15 @@ function SearchPage() {
                 }`} 
                 alt="Spotify Logo"
             />
+            </div>
+            <div className="container">
+                <SearchForm 
+                    query={query} 
+                    onQueryChange={e => setQuery(e.target.value)}
+                    onSubmit={handleSubmit}
+                />
+                <ResultsList songs={modifiedSongs} errors={errors} />
+            </div>
         </div>
     );
 }
