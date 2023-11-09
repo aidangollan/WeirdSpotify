@@ -8,7 +8,7 @@ function LogoutButton() {
     };
 
     return (
-        <button className="logout-button" onClick={handleLogoutClick}>Logout</button>
+        <button className="logout-button" onClick={handleLogoutClick}>Home</button>
     );
 }
 
