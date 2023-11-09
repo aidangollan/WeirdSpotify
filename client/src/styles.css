@@ -408,6 +408,7 @@ input[type="submit"] {
 @media (max-width: 768px) {
     body {
         padding: 10% 5%;
+        overflow-x: hidden; /* Prevent horizontal scrolling */
     }
     
     form {
@@ -421,5 +422,7 @@ input[type="submit"] {
 
     nav img {
         width: 50%; /* Adjust the width of the logo for mobile */
+        max-width: 100%; /* Ensure it doesn't exceed the parent's width */
+        box-sizing: border-box; /* Include padding and borders in the element's width */
     }
 }
