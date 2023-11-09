@@ -7,6 +7,7 @@ body {
     background-color: #1A1A2E;
     color: #EAEAEA;
     background-image: linear-gradient(to bottom, #1A1A2E, #16213E);
+    overflow-x: hidden;
 }
 
 h1 {
