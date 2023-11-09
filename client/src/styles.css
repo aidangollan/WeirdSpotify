@@ -28,6 +28,47 @@ h1 {
     100% { background-position: left; }
 }
 
+@keyframes enterAndSpin {
+    0% { right: 100%; transform: translateY(-50%) rotate(0deg); }
+    100% { right: calc(50% - 127.5px); transform: translateY(-50%) rotate(360deg); }
+}
+
+.logo-entering-spinning {
+    animation: enterAndSpin 2s forwards, spin 1s linear infinite 2s;
+}
+
+@keyframes spin {
+    from { transform: translateY(-50%) rotate(0deg); }
+    to { transform: translateY(-50%) rotate(360deg); }
+}
+
+@keyframes exit {
+    from { right: 50%; transform: translateY(-50%); }
+    to { right: -100%; transform: translateY(-50%); }
+}
+
+.logo-spinning {
+    animation: spin 1s linear infinite;
+    /* Reduced the duration to 1s for a faster spin */
+}
+
+.logo-exiting {
+    animation: exit 1s forwards;
+}
+
+.logo-idle {
+    right: -100%; /* Move it off-screen when idle */
+    transform: translateY(-50%);
+}
+
+.spotify-logo {
+    position: absolute;
+    right: -100%; /* Start off-screen */
+    top: 30%; /* Center vertically */
+    transform: translateY(-50%); /* Move up slightly */
+    z-index: 10; /* Ensure it's above other elements */
+}
+
 button {
     display: inline-block;
     padding: 10px 20px;
@@ -74,6 +115,7 @@ button:hover {
     margin: 0 auto;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     border-radius: 5px;
+    position: relative;
 }
 
 .spotify-link:hover, .playlist-link:hover {
