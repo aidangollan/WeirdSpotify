@@ -59,8 +59,7 @@ def search_algo(token, query):
     # Check if there are unmatched words and provide error messages for each one
     error_messages = [f"Error: word '{word}' is not a Spotify Song" for word in unmatched_words]
 
-    print(f"out: {out}")
-    print(f"errors: {error_messages}")
+    print(f"query {query}")
     return {'songs': out, 'errors': error_messages}
 
 def search_in_database(song_name):
