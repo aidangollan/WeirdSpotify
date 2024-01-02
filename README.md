@@ -13,5 +13,3 @@ For example, if you entered the string "Hello World it's lovely to see you today
 - To See
 - You
 - Today
-
-Idea, can I use ML to predict what the most likely sequence will be, cut down API calls?
