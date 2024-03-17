@@ -1,4 +1,4 @@
-# Weird Spotify
+# [Weird Spotify](https://weirdspotify.com/)
 
 ## Overview
 
