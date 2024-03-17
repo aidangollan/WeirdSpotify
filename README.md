@@ -3,6 +3,7 @@
 ## Overview
 
 This is a fun website I made that's capable of generating a Spotify playlist based on the user's input.
+
 The names of the songs in the playlist will match the string you enter.
 
 ## Example
