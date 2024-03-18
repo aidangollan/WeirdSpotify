@@ -4,7 +4,7 @@ import FallingLogo from '../components/LogoRainfall';
 import { v4 as uuidv4 } from 'uuid'; // Import the uuid function
 
 function LoginPage() {
-    const apiUrl = `${window.location.origin}/api/login`;
+    const apiUrl = `http://127.0.0.1:5000/api/login`;
   
     const handleLoginClick = (isGuest) => {
       const loginUrl = `${apiUrl}?guest=${isGuest}`;

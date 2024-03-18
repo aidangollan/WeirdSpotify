@@ -1,5 +1,5 @@
 async function handleFormSubmit(query) {
-    const apiUrl = `${window.location.origin}/api/search`;
+    const apiUrl = `http://127.0.0.1:5000/api/search`;
     try {
         const response = await fetch(apiUrl, {
             method: 'POST',
