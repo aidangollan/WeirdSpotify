@@ -8,8 +8,8 @@ from flask_cors import CORS
 import base64
 from create_playlist import create_playlist_on_spotify
 
-from dotenv import load_dotenv
-load_dotenv()
+#from dotenv import load_dotenv
+#load_dotenv()
 
 app = Flask(__name__, static_folder='client/build', static_url_path='')
 CORS(app, supports_credentials=True)
