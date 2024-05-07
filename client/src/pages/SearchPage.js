@@ -15,17 +15,14 @@ function SearchPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setAnimationState('entering-spinning'); // Start entering and spinning animation
+        setAnimationState('entering-spinning');
         
-        // Perform the search and wait for the result.
         const result = await handleFormSubmit(query);
     
-        // Set the animation state to 'exiting' once the search is complete.
         if (Array.isArray(result.songs)) {
             setSongs(result.songs);
-            setAnimationState('exiting'); // Trigger the exit animation
-            // Set a timeout to change the state to 'idle' after the exit animation duration.
-            setTimeout(() => setAnimationState('idle'), 1000); // Match with the duration of the exit animation
+            setAnimationState('exiting');
+            setTimeout(() => setAnimationState('idle'), 1000);
         } else {
             console.error("Received unexpected songs data format from server");
         }

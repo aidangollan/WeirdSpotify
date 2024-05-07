@@ -3,8 +3,11 @@ import base64
 from requests import post, get
 import json
 
-#from dotenv import load_dotenv
-#load_dotenv()
+# from dotenv import load_dotenv
+# load_dotenv()
+
+CLIENT_ID = os.getenv("CLIENT_ID")
+CLIENT_SECRET = os.getenv("CLIENT_SECRET")
 
 client_id = os.getenv("CLIENT_ID")
 client_secret = os.getenv("CLIENT_SECRET")
@@ -27,3 +30,21 @@ def get_token():
     json_result = json.loads(result.content)
     token = json_result["access_token"]
     return token
+
+def refresh_access_token(refresh_token):
+    refresh_url = "https://accounts.spotify.com/api/token"
+    headers = {
+        'Authorization': f"Basic {base64.b64encode(f'{CLIENT_ID}:{CLIENT_SECRET}'.encode()).decode()}",
+    }
+    data = {
+        'grant_type': 'refresh_token',
+        'refresh_token': refresh_token
+    }
+    
+    response = post(refresh_url, headers=headers, data=data)
+    if response.status_code == 200:
+        token_info = response.json()
+        return token_info['access_token']
+    else:
+        print("Error in refreshing token:", response.content)
+        return None

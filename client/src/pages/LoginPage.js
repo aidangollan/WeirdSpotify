@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../styles.css';
 import FallingLogo from '../components/LogoRainfall'; 
-import { v4 as uuidv4 } from 'uuid'; // Import the uuid function
+import { v4 as uuidv4 } from 'uuid';
 
 function LoginPage() {
     const apiUrl = `http://127.0.0.1:5000/api/login`;
@@ -11,9 +11,8 @@ function LoginPage() {
       window.location.href = loginUrl;
     };
   
-    // Define the fall and rotation durations
-    const fallDuration = 10; // Duration of the fall animation in seconds
-    const rotationDuration = 5; // Duration of the rotation animation in seconds
+    const fallDuration = 10;
+    const rotationDuration = 5;
     const logosCount = 35;
     const delayIncrement = fallDuration / logosCount;
   
@@ -28,6 +27,18 @@ function LoginPage() {
       ))
     );
 
+    const [visits, setVists] = useState('...');
+
+    useEffect(() => {
+      const getVisits = async () => {
+        const response = await fetch(`http://127.0.0.1:5000/api/getvisits`);
+        const data = await response.json();
+        setVists(data.visits);
+        console.log("visits", data.visits);
+      };
+      getVisits();
+    }, []);
+
     return (
         <div className="spotify-login-page">
             {logos}
@@ -40,6 +51,7 @@ function LoginPage() {
                 No matter the language, input your sentence and prepare to be amazed.
             </p>
             <button className="spotify-button guest-button" onClick={() => handleLoginClick(true)}>Let's Go!</button>
+            <p>{visits} Playlists and Counting!</p>
         </div>
     );
 }

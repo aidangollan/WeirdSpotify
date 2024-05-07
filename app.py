@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, send_from_directory, redirect, session
+from models import Visit
 from search import search_algo
-from auth import get_token
+from auth import get_token, refresh_access_token
 from db import db
 import requests
 import os
@@ -8,8 +9,8 @@ from flask_cors import CORS
 import base64
 from create_playlist import create_playlist_on_spotify
 
-#from dotenv import load_dotenv
-#load_dotenv()
+# from dotenv import load_dotenv
+# load_dotenv()
 
 app = Flask(__name__, static_folder='client/build', static_url_path='')
 CORS(app, supports_credentials=True)
@@ -20,6 +21,11 @@ db.init_app(app)
 # Spotify integration
 CLIENT_ID = os.getenv("CLIENT_ID")
 CLIENT_SECRET = os.getenv("CLIENT_SECRET")
+
+@app.route('/api/getvisits', methods=["GET"])
+def get_visits():
+    visit_count = Visit.query.count()
+    return jsonify({"visits": visit_count})
 
 @app.route('/api/login')
 def login():
@@ -42,25 +48,6 @@ def login():
     url_args = "&".join(["{}={}".format(key, val) for key, val in auth_query_parameters.items()])
     auth_url = "{}/?{}".format(os.getenv("AUTH_URL"), url_args)
     return redirect(auth_url)
-
-def refresh_access_token(refresh_token):
-    refresh_url = "https://accounts.spotify.com/api/token"
-    headers = {
-        'Authorization': f"Basic {base64.b64encode(f'{CLIENT_ID}:{CLIENT_SECRET}'.encode()).decode()}",
-    }
-    data = {
-        'grant_type': 'refresh_token',
-        'refresh_token': refresh_token
-    }
-    
-    response = requests.post(refresh_url, headers=headers, data=data)
-    if response.status_code == 200:
-        token_info = response.json()
-        return token_info['access_token']
-    else:
-        print("Error in refreshing token:", response.content)
-        return None
-
 
 @app.route('/api/callback')
 def callback():
@@ -86,6 +73,9 @@ def logout():
 
 @app.route("/api/search", methods=["POST"])
 def search():
+    new_visit = Visit()
+    db.session.add(new_visit)
+    db.session.commit() 
     token = get_token()
     query = request.json.get("query").strip(" ")
     result = search_algo(token, query)
@@ -100,6 +90,9 @@ def search_default():
 
 @app.route("/api/create_playlist", methods=["POST"])
 def create_playlist():
+    new_visit = Visit()
+    db.session.add(new_visit)
+    db.session.commit() 
     user_token = session.get('token')
     
     song_ids = request.json.get("song_ids")
