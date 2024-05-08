@@ -4,7 +4,7 @@ import FallingLogo from '../components/LogoRainfall';
 import { v4 as uuidv4 } from 'uuid';
 
 function LoginPage() {
-    const apiUrl = `http://127.0.0.1:5000/api/login`;
+    const apiUrl = `https://weirdspotify.com/api/login`;
   
     const handleLoginClick = (isGuest) => {
       const loginUrl = `${apiUrl}?guest=${isGuest}`;
@@ -31,7 +31,7 @@ function LoginPage() {
 
     useEffect(() => {
       const getVisits = async () => {
-        const response = await fetch(`http://127.0.0.1:5000/api/getvisits`);
+        const response = await fetch(`https://weirdspotify.com/api/getvisits`);
         const data = await response.json();
         setVists(data.visits);
         console.log("visits", data.visits);
